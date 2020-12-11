@@ -1,0 +1,6 @@
+Scrapy~=2.4.1
+selenium~=3.141.0
+matplotlib~=3.2.0
+itemadapter~=0.2.0
+APScheduler~=3.6.3
+fake-useragent~=0.1.11

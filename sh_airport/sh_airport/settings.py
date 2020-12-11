@@ -17,23 +17,15 @@ NEWSPIDER_MODULE = 'sh_airport.spiders'
 USER_AGENT = "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
-
-SPLASH_URL = 'http://123.57.46.218:8050'
+ROBOTSTXT_OBEY = False
 
 DOWNLOADER_MIDDLEWARES = {
-    'scrapy_splash.SplashCookiesMiddleware': 723,
-    'scrapy_splash.SplashMiddleware': 725,
-    #'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': None,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': None,
 }
 
 SPIDER_MIDDLEWARES = {
-    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+    'sh_airport.middlewares.ShAirportSpiderMiddleware': 100
 }
-
-DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
-
-HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)

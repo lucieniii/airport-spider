@@ -10,12 +10,16 @@ from fake_useragent import UserAgent
 
 
 def print_clean(f, data):
+    if not data:
+        return ''
     data = data.replace(' ', '').replace('\n', '')
     if len(data) > 0:
         f.write(data + '\n')
 
 
 def extract_clean(data):
+    if not data:
+        return ''
     return data.replace(' ', '').replace('\n', '')
 
 
@@ -24,26 +28,17 @@ class AirportSpider(scrapy.Spider):
     allowed_domains = ["shanghaiairport.com"]
     start_urls = ["http://www.shanghaiairport.com:8081/cn/flights.html"]
     output_file = None
-    keys = ["plan_departure_time",
-            "main_flight_id",
-            "sub_flight_id",
-            "airline",
-            "terminal",
-            "destination_via",
-            "check_in",
-            "actual_departure_time"]
 
     def parse(self, response):
         option = webdriver.ChromeOptions()
         option.add_argument("--user-agent=" + UserAgent().random)
+        # 启动远程driver
         driver = webdriver.Remote("http://123.57.46.218:4444/wd/hub", desired_capabilities=webdriver.DesiredCapabilities.CHROME, options=option)
         driver.get(response.url)
         time.sleep(10 + 10 * random.random())
         items = []
-        cnt = 0
-        # while True:
-        while cnt < 1:
-            cnt += 1
+        while True:
+            # 提取数据
             html = driver.page_source
             for it in Selector(text=html).xpath("//*[@id=\"data\"]/tr"):
                 item = ShAirportItem()
@@ -62,6 +57,7 @@ class AirportSpider(scrapy.Spider):
                             flight_list.append(data)
                 item["sub_flight_id"] = flight_list
                 items.append(item)
+            # 翻页
             try:
                 next_page = driver.find_element_by_css_selector('#Pages > a.next')
                 next_page.click()
