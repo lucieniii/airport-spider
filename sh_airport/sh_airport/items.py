@@ -7,6 +7,11 @@ import scrapy
 
 
 class ShAirportItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    plan_departure_time = scrapy.Field()
+    main_flight_id = scrapy.Field()
+    sub_flight_id = scrapy.Field()
+    airline = scrapy.Field()
+    terminal = scrapy.Field()
+    destination_via = scrapy.Field()
+    check_in = scrapy.Field()
+    actual_departure_time = scrapy.Field()

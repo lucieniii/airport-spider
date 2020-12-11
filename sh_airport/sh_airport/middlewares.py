@@ -4,7 +4,7 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-
+# from fake_useragent import UserAgent # fake user agent
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
@@ -71,7 +71,8 @@ class ShAirportDownloaderMiddleware:
     def process_request(self, request, spider):
         # Called for each request that goes through the downloader
         # middleware.
-
+        # ua = UserAgent() # fake user agent
+        # request.headers['User-Agent'] = ua.random # fake user agent
         # Must either:
         # - return None: continue processing this request
         # - or return a Response object
